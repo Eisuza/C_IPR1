@@ -7,37 +7,34 @@ using namespace std;
 
 int main()
 {
-	char ptrM[256], ptrK[256];
-	int lenM, lenK;
-	do {
-		printf("Enter M: \n");
-		gets(ptrM);
-		lenM = strlen(ptrM);
-	} while (lenM == 0);
-	do {
-		printf("Enter K < M: \n");
-		gets(ptrK);
-		lenK = strlen(ptrK);
-	} while (lenM <= lenK && lenK != 0);
-	//printf("size of M: %d\n", lenM);
-	//printf("size of K: %d\n", lenK);
-	char ptrFlags[256];
-	for (int i = 0; ptrK[i]; i++)
-	{
-		if (ptrK[i] != ' ')	//potencial error
-			ptrFlags[ptrK[i]] = 1;
-	}
-	char ptrResult[256];
-	int cnResult = 0;
-	for (int i = 0; ptrM[i]; i++)
-	{
-		if (ptrFlags[ptrM[i]] != 1)
-		{
-			ptrResult[cnResult] = ptrM[i];
-			cnResult++;
+	char strM[256], strK[256];				// переменные для хранения строк(массивов символов char).
+	char strResult[256], flags[256] = { 0 };
+	int lenM, lenK;							// переменные для хранения длинн введенных строк.
+	int cnResult = 0;						// переменная для учета сдвигов по результирующей строке
+	do {									// повторяем следующее:
+		printf("Enter M: \n");				// - приглашаем пользователя ввести строку (М);
+		gets(strM);							// - считываем введенные с клавиатуры символы;
+		lenM = strlen(strM);				// - узнаем длину введенной строки (М);
+	} while (lenM == 0);					// пока пользователь не введет хотябы 1 символ.
+	do {									// повторяем следующее:
+		printf("Enter K < M: \n");			// - приглашаем пользователя ввести строку(К);
+		gets(strK);							// - считываем введенные с клавиатуры символы;
+		lenK = strlen(strK);				// - узнаем длину введенной строки (М);
+	} while (lenM <= lenK);					// пока пользователь не введет строку меньше М						
+	for (int i = 0; strK[i]; i++)			// пока не конец строки К (не '\0')	
+	{										// - в элемент строки flags который находится на позиции
+		flags[strK[i]] = 1;					// - равной ASCII коду і-того элемента строки К,
+	}										// - записываем 1
+	for (int i = 0; strM[i]; i++)			// пока не конец строки М (не '\0')
+	{										// - если элемент строки flags который находится на позиции
+		if (flags[strM[i]] != 1)			// - равной ASCII коду i-того элемента строки М не равен 1:
+		{									// -- в элемент результирующей строки записываем значение 
+			strResult[cnResult] = strM[i];	// -- i-того элемента строки М
+			cnResult++;						// -- увеличиваем счетчик сдвига на 1 результирующей строки
 		}
 	}
-	ptrResult[cnResult] = '\0';
-	printf("\nResult is: %s\n", ptrResult);
-	return 0;
+	strResult[cnResult] = '\0';				// завершаем результирующую строку
+	printf("\nResult is: %s\n", strResult);	// выводим на экран результат работы программы
+	getchar();								// ожидаем нажатия символа на клавиатуре, чтобы закрыть
+	return 0;								// программу
 }
